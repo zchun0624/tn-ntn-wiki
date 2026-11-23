@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>衛星怎麼幫手機上網</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F4EF;--card:#FFFFFF;--ink:#14213D;--muted:#5C6478;--line:#E3DED3;--blue:#2A6F97;--accent:#E07A2F;--accent-soft:#FCEBDD;--ground:#DCE8E0;
+--sans:"Noto Sans TC",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#0E1526;font-family:var(--sans);color:var(--ink)}
+.stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.deck{width:1280px;height:720px;position:relative;transform-origin:center center}
+.slide{position:absolute;inset:0;background:var(--bg);display:none;flex-direction:column;padding:56px 72px 0}
+.slide.on{display:flex}
+.inner{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+header{display:flex;align-items:baseline;gap:18px;margin-bottom:18px}
+header .no{font-family:var(--mono);color:var(--accent);font-size:24px;font-weight:600}
+h2{font-size:44px;line-height:1.2;margin:0;letter-spacing:.01em}
+.analogy{align-self:stretch;margin:0 0 22px;padding:14px 20px;background:var(--accent-soft);border-left:6px solid var(--accent);border-radius:8px;font-size:22px;line-height:1.55}
+.analogy span{display:inline-block;font-size:14px;font-weight:700;color:var(--accent);margin-right:12px;letter-spacing:.1em;vertical-align:2px}
+.content{flex:1;min-height:0;display:grid;grid-template-columns:1fr;gap:36px;align-items:center}
+.content.with-fig{grid-template-columns:1.15fr .85fr}
+ul{margin:0;padding:0;list-style:none;display:grid;gap:16px}
+li{font-size:25px;line-height:1.5;padding-left:30px;position:relative}
+li::before{content:"";position:absolute;left:4px;top:.62em;width:12px;height:12px;border-radius:3px;background:var(--blue)}
+.content:not(.with-fig) li{font-size:30px}
+ul.big li{font-size:34px}
+table{width:100%;border-collapse:collapse;font-size:23px;background:var(--card);border-radius:10px;overflow:hidden;box-shadow:0 0 0 1px var(--line)}
+th,td{text-align:left;padding:14px 20px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--ink);color:#fff;font-weight:600}tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;color:var(--blue);white-space:nowrap}
+.fig{margin:0;height:100%;max-height:380px;display:flex;align-items:center;justify-content:center}
+.fig svg{width:100%;height:100%;overflow:visible}
+.fig .lbl{font-size:17px;fill:var(--ink);font-weight:500}.fig .note{font-size:14px;fill:var(--muted)}
+.fig .h{font-size:19px;font-weight:700;fill:var(--ink)}.fig .num{font-size:24px;fill:#fff;font-weight:700}
+.fig .box{fill:var(--card);stroke:var(--line);stroke-width:2}.fig .box.hl{fill:var(--accent-soft);stroke:var(--accent)}.fig .box.sat{fill:#E4EEF4;stroke:var(--blue)}
+.fig .arrow{fill:none;stroke:var(--ink);stroke-width:2.5}
+.fig .dot{fill:var(--blue)}.fig .dot.hl{fill:var(--accent)}.fig .dot.open{fill:var(--bg);stroke:var(--blue);stroke-width:3}
+footer{flex:none;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding:10px 0 14px;margin-top:12px;line-height:1.5}
+.cover{flex:1;display:flex;flex-direction:column;justify-content:center;background:radial-gradient(circle at 85% 20%,#E4EEF4 0,transparent 45%)}
+.cover .kicker{font-family:var(--mono);font-size:18px;color:var(--accent);letter-spacing:.12em;margin:0 0 18px}
+.cover h1{font-size:72px;line-height:1.15;margin:0 0 18px}.cover .sub{font-size:30px;color:var(--blue);margin:0 0 40px}
+.cover .meta{font-size:18px;color:var(--muted);margin:0}
+.nav{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:10px;align-items:center;font-family:var(--mono);color:#C9D2E3;font-size:14px;z-index:5}
+.nav button{background:#1E2A44;color:#fff;border:0;border-radius:999px;width:38px;height:38px;font-size:18px;cursor:pointer}
+.bar{position:fixed;left:0;top:0;height:4px;background:var(--accent);z-index:5;transition:width .2s}
+body.all .stage{position:static;display:block;overflow:visible}body.all .deck{transform:none!important;height:auto}
+body.all .slide{display:flex;position:relative;height:720px;margin:0 0 20px}body.all .nav,body.all .bar{display:none}
+@media print{body{background:#fff}.nav,.bar{display:none}.stage{position:static;display:block}.deck{transform:none!important;height:auto}.slide{display:flex;position:relative;height:720px;page-break-after:always}}
+</style></head><body>
+<div class="bar"></div><div class="stage"><div class="deck"><section class="slide k-cover" data-no="1"><div class="inner"><div class="cover"><p class="kicker">TN-NTN 入門・教學簡報</p><h1>衛星怎麼幫手機上網？</h1><p class="sub">地面網路與非地面網路入門</p><p class="meta">資料來源：TN-NTN LLM Wiki（6 份資料、34 頁）</p></div></div><footer>出處｜wiki：concepts/ntn.md　原始資料：3gpp2025, p.1</footer></section><section class="slide k-content" data-no="2"><div class="inner"><header><span class="no">02</span><h2>為什麼需要衛星？</h2></header><p class="analogy"><span>生活比喻</span>哪裡蓋不了基地台、基地台壞了、或要把同一份內容送給一大片區域，就讓衛星來補位</p><div class="content"><div class="text"><ul class=""><li>全球仍有 29 億人無法上網</li><li>鄉村、海上、空中、災區：地面網路很難可靠運作</li><li>颶風救災時，衛星直接對現有手機發送緊急警報與簡訊</li></ul></div></div></div><footer>出處｜wiki：concepts/ntn-use-cases.md　原始資料：3gpp2025, p.6；tutorial2024, p.3；ericsson2025, p.3；ericsson2025, p.2</footer></section><section class="slide k-content" data-no="3"><div class="inner"><header><span class="no">03</span><h2>什麼是非地面網路？</h2></header><p class="analogy"><span>生活比喻</span>把「基地台」或「訊號中繼站」搬到天上，讓地面沒有基地台的地方也收得到訊號</p><div class="content with-fig"><div class="text"><ul class=""><li>非地面網路（NTN）：用空中或太空的載具，搭載中繼站或基地台</li><li>成員：衛星、高空平台（HAPS）、空對地網路</li><li>高空平台大約在 20 km 高，覆蓋範圍約 50 km</li><li>3GPP 目前以衛星網路為主</li></ul></div><figure class="fig"><svg viewBox="0 0 420 380" role="img" aria-label="地面、高空平台與衛星的相對位置示意">
+<rect x="0" y="330" width="420" height="50" fill="var(--ground)"/>
+<text x="210" y="362" class="lbl" text-anchor="middle">地面</text>
+<g transform="translate(70,270)"><rect x="-6" y="0" width="12" height="60" fill="var(--ink)"/><path d="M-22 0 L0 -18 L22 0" fill="none" stroke="var(--ink)" stroke-width="4"/></g>
+<text x="70" y="255" class="lbl" text-anchor="middle">地面基地台</text>
+<g transform="translate(210,175)"><ellipse rx="46" ry="16" fill="var(--blue)"/><rect x="-10" y="14" width="20" height="10" fill="var(--blue)"/></g>
+<text x="210" y="150" class="lbl" text-anchor="middle">高空平台（HAPS）約 20 km</text>
+<g transform="translate(340,60)"><rect x="-14" y="-14" width="28" height="28" fill="var(--accent)"/><rect x="-58" y="-6" width="38" height="12" fill="var(--blue)"/><rect x="20" y="-6" width="38" height="12" fill="var(--blue)"/></g>
+<text x="340" y="105" class="lbl" text-anchor="middle">衛星</text>
+<text x="410" y="20" class="note" text-anchor="end">高度不按比例</text>
+</svg></figure></div></div><footer>出處｜wiki：concepts/ntn.md、concepts/uav-and-haps.md　原始資料：3gpp2025, p.1；3gpp2025, p.38；lin2021, p.1；tutorial2024, p.56–57；lin2021, p.2</footer></section><section class="slide k-content" data-no="4"><div class="inner"><header><span class="no">04</span><h2>地面網路 vs 衛星網路</h2></header><p class="analogy"><span>生活比喻</span>地面網路近、快、容量大，但只蓋得到有基地台的地方；NTN 從天上蓋，範圍大，但延遲長、衛星會移動</p><div class="content"><div class="text"><table><thead><tr><th>項目</th><th>地面網路（TN）</th><th>衛星網路（NTN）</th></tr></thead><tbody><tr><td>傳播延遲</td><td>通常 &lt;1 ms</td><td>同步軌道衛星（GEO）可達數百 ms</td></tr><tr><td>覆蓋範圍</td><td>區域性</td><td>全球</td></tr><tr><td>資料速率</td><td>較高</td><td>較低</td></tr><tr><td>涵蓋區域會不會移動</td><td>固定</td><td>低軌（LEO）、中軌（MEO）的涵蓋區域會移動</td></tr></tbody></table></div></div></div><footer>出處｜wiki：comparisons/tn-vs-ntn.md　原始資料：3gpp2025, p.3–4；3gpp2025, p.4；tutorial2024, p.16, Table I</footer></section><section class="slide k-content" data-no="5"><div class="inner"><header><span class="no">05</span><h2>三種衛星軌道</h2></header><p class="analogy"><span>生活比喻</span>衛星飛得越低，訊號來回越快，但每顆衛星看到的地面範圍越小，需要越多顆才能涵蓋全球</p><div class="content with-fig"><div class="text"><ul class=""><li>LEO：約 500～2,000 km</li><li>MEO：約 8,000～20,000 km</li><li>GEO：35,786 km，從地面看好像靜止不動</li><li>LEO 速度約 7.8 km/s（會隨高度改變），5～10 分鐘就飛過天空</li></ul></div><figure class="fig"><svg viewBox="0 0 440 400" role="img" aria-label="LEO、MEO、GEO 三種軌道高度示意">
+<defs><clipPath id="oc"><rect x="0" y="0" width="440" height="400"/></clipPath></defs>
+<g clip-path="url(#oc)">
+<path d="M50 400 A170 170 0 0 1 390 400" fill="var(--ground)"/>
+<path d="M20 400 A200 200 0 0 1 420 400" fill="none" stroke="var(--accent)" stroke-width="3"/>
+<path d="M-60 400 A280 280 0 0 1 500 400" fill="none" stroke="var(--blue)" stroke-width="3" stroke-dasharray="8 6"/>
+<path d="M-150 400 A370 370 0 0 1 590 400" fill="none" stroke="var(--ink)" stroke-width="3" stroke-dasharray="2 6"/>
+</g>
+<text x="220" y="330" class="lbl" text-anchor="middle">地球</text>
+<text x="220" y="192" class="lbl" text-anchor="middle">LEO 約 500～2,000 km</text>
+<text x="220" y="112" class="lbl" text-anchor="middle">MEO 約 8,000～20,000 km</text>
+<text x="220" y="22" class="lbl" text-anchor="middle">GEO 35,786 km</text>
+<text x="430" y="392" class="note" text-anchor="end">高度不按比例</text>
+</svg></figure></div></div><footer>出處｜wiki：concepts/satellite-orbits.md　原始資料：3gpp2025, p.2；3gpp2025, p.38；ericsson2025, p.2；tutorial2024, p.45；tutorial2024, p.63</footer></section><section class="slide k-content" data-no="6"><div class="inner"><header><span class="no">06</span><h2>軌道高度帶來的取捨</h2></header><p class="analogy"><span>生活比喻</span>越低的軌道延遲越短、訊號越好，但衛星跑得越快、需要越多顆</p><div class="content"><div class="text"><ul class=""><li>延遲：GEO 可達數百 ms；LEO 延遲較低</li><li>三顆位置適當的 GEO 衛星就能涵蓋幾乎全球</li><li>每平方公里容量（模擬結果）：LEO 約 170 Kbps，GEO 約 1.4 Kbps</li><li>低延遲、手機直連：LEO 較有優勢；但要處理頻繁換手</li></ul></div></div></div><footer>出處｜wiki：comparisons/geo-vs-meo-vs-leo.md、concepts/satellite-orbits.md、concepts/ntn-performance.md　原始資料：3gpp2025, p.2；3gpp2025, p.2, p.4；ericsson2025, p.2；figaro2026, p.7；figaro2026, p.5, p.7</footer></section><section class="slide k-content" data-no="7"><div class="inner"><header><span class="no">07</span><h2>衛星是鏡子，還是基地台？</h2></header><p class="analogy"><span>生活比喻</span>透明式衛星像一面「鏡子」，只轉送訊號；再生式衛星本身就是「基地台」</p><div class="content with-fig"><div class="text"><ul class=""><li>透明式：衛星只變頻、濾波、放大，基地台（gNB）在地面</li><li>再生式：衛星自己解調、解碼、路由，還能用衛星間鏈路（ISL）</li><li>Rel-17 只支援透明式；再生式從 Rel-19 開始支援</li></ul></div><figure class="fig"><svg viewBox="0 0 460 360" role="img" aria-label="透明式與再生式衛星架構示意">
+<text x="0" y="22" class="h">透明式：衛星像鏡子</text>
+<g class="row" transform="translate(0,40)">
+<rect x="0" y="40" width="70" height="40" rx="8" class="box"/><text x="35" y="66" class="lbl" text-anchor="middle">手機</text>
+<rect x="150" y="0" width="80" height="40" rx="8" class="box sat"/><text x="190" y="26" class="lbl" text-anchor="middle">衛星</text>
+<rect x="290" y="40" width="160" height="40" rx="8" class="box hl"/><text x="370" y="66" class="lbl" text-anchor="middle">地面基地台（gNB）</text>
+<path d="M70 60 L150 22 M230 22 L290 60" class="arrow"/></g>
+<text x="0" y="200" class="h">再生式：衛星自己就是基地台</text>
+<g transform="translate(0,218)">
+<rect x="0" y="60" width="70" height="40" rx="8" class="box"/><text x="35" y="86" class="lbl" text-anchor="middle">手機</text>
+<rect x="130" y="0" width="120" height="40" rx="8" class="box hl"/><text x="190" y="26" class="lbl" text-anchor="middle">衛星＝基地台</text>
+<rect x="330" y="0" width="120" height="40" rx="8" class="box sat"/><text x="390" y="26" class="lbl" text-anchor="middle">另一顆衛星</text>
+<rect x="330" y="80" width="120" height="40" rx="8" class="box"/><text x="390" y="106" class="lbl" text-anchor="middle">地面閘道站</text>
+<path d="M70 80 L130 22 M250 20 L330 20 M250 30 L330 100" class="arrow"/>
+<text x="290" y="12" class="note" text-anchor="middle">ISL</text></g>
+</svg></figure></div></div><footer>出處｜wiki：comparisons/transparent-vs-regenerative-payload.md　原始資料：3gpp2025, p.2；3gpp2025, p.4–5, p.10；3gpp2025, p.5；3gpp2025, p.15, p.23</footer></section><section class="slide k-content" data-no="8"><div class="inner"><header><span class="no">08</span><h2>問題一：太遠</h2></header><p class="analogy"><span>生活比喻</span>重傳機制原本要等對方回「收到了」才能送下一包；衛星太遠，等回覆的時間太長</p><div class="content"><div class="text"><ul class=""><li>延遲長：地面通常 &lt;1 ms，GEO 可達數百 ms</li><li>重傳卡住：所有混合自動重傳（HARQ）程序都在等回覆，傳輸就停擺</li><li>解法：程序數從 16 加到 32，或乾脆關掉回饋</li></ul></div></div></div><footer>出處｜wiki：concepts/harq-in-ntn.md、concepts/ntn-challenges.md　原始資料：lin2021, p.4；3gpp2025, p.4；ericsson2025, p.6；3gpp2025, p.16</footer></section><section class="slide k-content" data-no="9"><div class="inner"><header><span class="no">09</span><h2>問題二：太快</h2></header><p class="analogy"><span>生活比喻</span>就算你站著不動，頭上的衛星也一直在飛走，所以手機要預先知道哪顆衛星什麼時候離開</p><div class="content"><div class="text"><ul class=""><li>頻率偏移：LEO 在 2 GHz 時，都卜勒頻移可達 48 kHz</li><li>LEO 衛星移動快，涵蓋區域跟著移動，需要頻繁換手</li><li>一顆衛星涵蓋的區域內訊號強度差不多，只靠「比訊號強弱」換手不可靠</li><li>新做法：在訊號量測之外，加上依時間、依位置觸發的條件式換手（CHO）</li></ul></div></div></div><footer>出處｜wiki：concepts/ntn-mobility.md、concepts/ntn-challenges.md　原始資料：lin2021, p.3；tutorial2024, p.64–65；3gpp2025, p.5；3gpp2025, p.3–4；ericsson2025, p.5；3gpp2025, p.16；lin2021, p.4</footer></section><section class="slide k-content" data-no="10"><div class="inner"><header><span class="no">10</span><h2>解法：手機先算好再送</h2></header><p class="analogy"><span>生活比喻</span>手機先用定位知道自己在哪、衛星在哪，算出訊號要飛多久、頻率會偏多少，提早送出並先調好頻率</p><div class="content with-fig"><div class="text"><ul class=""><li>衛星廣播自己的軌道（星曆）</li><li>手機用全球衛星導航系統（GNSS）算出來回時間（RTT）和相對速度</li><li>上行提早送出（時序提前，TA），頻率也先補償</li><li>弱點：室內、地下收不到 GNSS 時就不適用</li></ul></div><figure class="fig"><svg viewBox="0 0 440 360" role="img" aria-label="手機先算好再送的三個步驟">
+<g class="step" transform="translate(10,10)"><rect width="420" height="90" rx="12" class="box"/>
+<circle cx="45" cy="45" r="24" fill="var(--accent)"/><text x="45" y="53" class="num" text-anchor="middle">1</text>
+<text x="88" y="40" class="lbl">衛星廣播自己的軌道</text><text x="88" y="68" class="note">（星曆）</text></g>
+<g class="step" transform="translate(10,130)"><rect width="420" height="90" rx="12" class="box"/>
+<circle cx="45" cy="45" r="24" fill="var(--accent)"/><text x="45" y="53" class="num" text-anchor="middle">2</text>
+<text x="88" y="40" class="lbl">手機用 GNSS 知道自己在哪</text><text x="88" y="68" class="note">算出來回時間和相對速度</text></g>
+<g class="step" transform="translate(10,250)"><rect width="420" height="90" rx="12" class="box hl"/>
+<circle cx="45" cy="45" r="24" fill="var(--accent)"/><text x="45" y="53" class="num" text-anchor="middle">3</text>
+<text x="88" y="40" class="lbl">提早送出＋先調好頻率</text><text x="88" y="68" class="note">訊號剛好準時、準頻到達</text></g>
+</svg></figure></div></div><footer>出處｜wiki：concepts/timing-advance-and-doppler.md　原始資料：lin2021, p.3–4；3gpp2025, p.15；lin2021, p.3；lin2021, p.4；3gpp2025, p.16；figaro2026, p.4</footer></section><section class="slide k-content" data-no="11"><div class="inner"><header><span class="no">11</span><h2>手機直連衛星的兩種做法</h2></header><p class="analogy"><span>生活比喻</span>不用額外買衛星電話，口袋裡的手機就能在沒有基地台的地方直接連衛星傳簡訊</p><div class="content"><div class="text"><table><thead><tr><th>項目</th><th>未修改 4G</th><th>5G 衛星新規格（NR-NTN）</th></tr></thead><tbody><tr><td>手機</td><td>現有手機就能用</td><td>需要新晶片</td></tr><tr><td>誰補償延遲</td><td>網路端，每個波束只能對準一個參考點</td><td>每支手機自己補償</td></tr><tr><td>適合的時程</td><td>短期、務實</td><td>長期、面向未來</td></tr></tbody></table></div></div></div><footer>出處｜wiki：concepts/direct-to-device.md、comparisons/unmodified-4g-vs-nr-ntn.md　原始資料：ericsson2025, p.2–3；ericsson2025, p.3, Fig. 1；ericsson2025, p.4–5</footer></section><section class="slide k-content" data-no="12"><div class="inner"><header><span class="no">12</span><h2>地面＋衛星一起用</h2></header><p class="analogy"><span>生活比喻</span>手機同時有地面和衛星兩條路，重點是在對的時間，把對的人分到對的路上</p><div class="content with-fig"><div class="text"><ul class=""><li>Rel-19 的 DualSteer：手機用兩張 SIM 卡（USIM）同時連地面與衛星</li><li>每支手機同一時間只走一條路</li><li>只選延遲小的路，大多數手機都擠到地面 → 塞車</li><li>研究：用深度 Q 網路（DQN）在地面塞車前，先把部分手機整支改走衛星；8 支手機時，封包遺失率從 9.5% 降到 2.0%</li></ul></div><figure class="fig"><svg viewBox="0 0 440 360" role="img" aria-label="一支手機同時連地面與衛星兩條路">
+<rect x="10" y="150" width="80" height="60" rx="10" class="box hl"/><text x="50" y="186" class="lbl" text-anchor="middle">手機</text>
+<text x="50" y="232" class="note" text-anchor="middle">兩張 SIM 卡</text>
+<rect x="170" y="40" width="110" height="44" rx="10" class="box sat"/><text x="225" y="68" class="lbl" text-anchor="middle">衛星</text>
+<rect x="170" y="276" width="110" height="44" rx="10" class="box"/><text x="225" y="304" class="lbl" text-anchor="middle">地面基地台</text>
+<rect x="330" y="150" width="100" height="60" rx="10" class="box"/><text x="380" y="186" class="lbl" text-anchor="middle">核心網</text>
+<path d="M90 165 L170 62 M280 62 L330 165" class="arrow" stroke-dasharray="8 6"/>
+<path d="M90 195 L170 298 M280 298 L330 195" class="arrow"/>
+<text x="220" y="185" class="note" text-anchor="middle">同一時間只走一條</text>
+</svg></figure></div></div><footer>出處｜wiki：concepts/tn-ntn-integration.md　原始資料：jeon2026, p.1；jeon2026, p.2；jeon2026, p.5</footer></section><section class="slide k-content" data-no="13"><div class="inner"><header><span class="no">13</span><h2>標準怎麼一步步完成</h2></header><p class="analogy"><span>生活比喻</span>3GPP 是全球電信業者一起訂規則的組織：先研究寫成報告，大家同意後再寫成規格</p><div class="content with-fig"><div class="text"><ul class=""><li>Rel-15：研究通道模型，2019 年 6 月完成</li><li>Rel-17：第一個正式規格（2022 年）</li><li>Rel-18：2024 年 6 月，加入 Ka-band、網路驗證手機位置</li><li>Rel-19（預計 2025 年底）：衛星上放基地台、開始研究不靠 GNSS</li><li>Rel-20（目標 2027 年）：GNSS 受干擾時仍能運作</li></ul></div><figure class="fig"><svg viewBox="0 0 460 300" role="img" aria-label="3GPP NTN 版本時間軸">
+<line x1="20" y1="150" x2="440" y2="150" stroke="var(--ink)" stroke-width="3"/>
+<g class="tick" transform="translate(40,150)"><circle r="10" class="dot"/><text y="-28" class="lbl" text-anchor="middle">Rel-15</text><text y="40" class="note" text-anchor="middle">2019</text></g>
+<g class="tick" transform="translate(140,150)"><circle r="14" class="dot hl"/><text y="-28" class="lbl" text-anchor="middle">Rel-17</text><text y="40" class="note" text-anchor="middle">2022</text><text y="64" class="note" text-anchor="middle">第一個正式規格</text></g>
+<g class="tick" transform="translate(240,150)"><circle r="10" class="dot"/><text y="-28" class="lbl" text-anchor="middle">Rel-18</text><text y="40" class="note" text-anchor="middle">2024</text></g>
+<g class="tick" transform="translate(330,150)"><circle r="10" class="dot open"/><text y="-28" class="lbl" text-anchor="middle">Rel-19</text><text y="40" class="note" text-anchor="middle">預計 2025</text></g>
+<g class="tick" transform="translate(420,150)"><circle r="10" class="dot open"/><text y="-28" class="lbl" text-anchor="middle">Rel-20</text><text y="40" class="note" text-anchor="middle">目標 2027</text></g>
+</svg></figure></div></div><footer>出處｜wiki：concepts/3gpp-standardization.md、timeline/3gpp-ntn-releases.md　原始資料：tutorial2024, p.6；lin2021, p.2；3gpp2025, p.6–7；figaro2026, p.3；3gpp2025, p.12, p.15, p.30；3gpp2025, p.19–22；figaro2026, p.4；3gpp2025, p.22–23；tutorial2024, p.13–14；jeon2026, p.1；3gpp2025, p.23；figaro2026, p.4–5</footer></section><section class="slide k-summary" data-no="14"><div class="inner"><header><span class="no">14</span><h2>三句話帶走</h2></header><p class="analogy"><span>生活比喻</span>衛星又遠又快：遠造成延遲，快造成頻率偏移、涵蓋區域跟著移動</p><div class="content"><div class="text"><ul class="big"><li>衛星把網路帶到地面蓋不到的地方</li><li>又遠又快，所以要提早送、先調頻、預先換手</li><li>未來：地面和衛星一起用，各取所長</li></ul></div></div></div><footer>出處｜wiki：concepts/ntn-challenges.md、concepts/ntn.md、concepts/timing-advance-and-doppler.md、concepts/ntn-mobility.md、concepts/tn-ntn-integration.md　原始資料：3gpp2025, p.3–4；3gpp2025, p.1；lin2021, p.3–4；lin2021, p.3；jeon2026, p.1</footer></section></div></div>
+<div class="nav"><button class="prev" aria-label="上一頁">‹</button><span class="cnt"></span><button class="next" aria-label="下一頁">›</button></div>
+<script>
+const deck=document.querySelector('.deck'),slides=[...document.querySelectorAll('.slide')],bar=document.querySelector('.bar'),cnt=document.querySelector('.cnt');
+let i=0;const all=new URLSearchParams(location.search).has('all');if(all)document.body.classList.add('all');
+function fit(){if(all)return;const s=Math.min(innerWidth/1280,(innerHeight-60)/720);deck.style.transform=`scale(${s})`;}
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('on',k===i));cnt.textContent=`${i+1} / ${slides.length}`;bar.style.width=`${(i+1)/slides.length*100}%`;}
+addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(i+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(i-1)}});
+document.querySelector('.prev').onclick=()=>show(i-1);document.querySelector('.next').onclick=()=>show(i+1);
+let x0=null;addEventListener('touchstart',e=>x0=e.touches[0].clientX);addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)show(i+(dx<0?1:-1));x0=null});
+addEventListener('resize',fit);fit();show(0);
+</script></body></html>

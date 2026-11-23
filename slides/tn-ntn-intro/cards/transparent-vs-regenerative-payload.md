@@ -1,0 +1,16 @@
+# 卡：透明式和再生式酬載比較（Transparent vs Regenerative Payload）
+
+> 來源頁：`wiki/comparisons/transparent-vs-regenerative-payload.md`（只讀這一頁，原句照抄）
+
+- F1｜一句話差別｜透明式衛星像一面「鏡子」，只轉送訊號，基地台在地面；再生式衛星本身就是「基地台」，可以在太空中處理訊號 [3gpp2025, p.2]。
+- F2｜比較表｜項目＝別名；透明式（transparent／bent-pipe）＝彎管、放大轉送（amplify-and-forward）；再生式（regenerative）＝解碼轉送（decode-and-forward）；出處＝[figaro2026, p.2–3]
+- F3｜比較表｜項目＝衛星上做什麼；透明式（transparent／bent-pipe）＝只變頻、濾波、放大，像類比射頻中繼器；再生式（regenerative）＝另外有解調、解碼、交換、路由、編碼調變；出處＝[3gpp2025, p.2]
+- F4｜比較表｜項目＝gNB 在哪裡；透明式（transparent／bent-pipe）＝地面（在閘道站端）；再生式（regenerative）＝衛星上（或 DU 在衛星、CU 在地面）；出處＝[3gpp2025, p.4–5, p.10]
+- F5｜比較表｜項目＝閘道站的角色；透明式（transparent／bent-pipe）＝就是 gNB；再生式（regenerative）＝連到核心網的路由器；出處＝[3gpp2025, p.4–5]
+- F6｜比較表｜項目＝衛星間鏈路（ISL）；透明式（transparent／bent-pipe）＝不能用；再生式（regenerative）＝可以用；出處＝[3gpp2025, p.5]
+- F7｜比較表｜項目＝控制與使用者平面；透明式（transparent／bent-pipe）＝終止在地面，RTT 較長；再生式（regenerative）＝服務鏈路上就是 NR-Uu 介面；出處＝[3gpp2025, p.9]
+- F8｜比較表｜項目＝3GPP 支援時程；透明式（transparent／bent-pipe）＝Rel-17 起（Rel-17 只支援透明式）；再生式（regenerative）＝Rel-19 開始支援；出處＝[3gpp2025, p.15, p.23]
+- F9｜什麼時候用哪一個｜透明式衛星最簡單，是 Rel-17 規格的重點 [lin2021, p.3]。
+- F10｜什麼時候用哪一個｜再生式可以用衛星間鏈路，UE 不一定要經由同一個地面閘道站才能接到核心網 [3gpp2025, p.10]。
+- F11｜什麼時候用哪一個｜figaro2026 的模擬採用再生式架構，因為這是 Rel-19 考慮的架構 [figaro2026, p.5]。
+- F12｜什麼時候用哪一個｜想在衛星上做邊緣運算、讓 UE 經由衛星直接互通（UE-衛星-UE），需要衛星上有處理能力 [3gpp2025, p.22–23]。
